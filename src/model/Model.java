@@ -13,13 +13,13 @@ public class Model {
     public volatile List<DrawableParticle> pDraw = new ArrayList<DrawableParticle>();
 
     public void step() {
-        for (Particle p : this.p) {
+        for (Particle p : this.p) { // This should be below move. This means that particles can be colliding for a time frame but still not combine.
             p.interact(this);
         }
         for (Particle p : this.p) {
             p.move();
         }
-        mergeParticles();
+        mergeParticles(); // This should remain after move and interact.
         updateGraphicalRepresentation();
     }
 
@@ -39,7 +39,7 @@ public class Model {
                 deadPs.add(p);
             }
         }
-        this.p.removeAll(deadPs); // Error? Should create new array list with dead particles absent, then replace p to achieve atomic update.
+        this.p.removeAll(deadPs);
         while (!deadPs.isEmpty()) {
             Particle current = deadPs.pop();
             Set<Particle> ps = getSingleChunck(current);
@@ -48,6 +48,11 @@ public class Model {
         }
     }
 
+    /**
+     * Returns a set of particles that are impacting each other.
+     * @param current
+     * @return
+     */
     private Set<Particle> getSingleChunck(Particle current) {
         Set<Particle> impacting = new HashSet<Particle>();
         impacting.add(current);

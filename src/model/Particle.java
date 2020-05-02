@@ -20,7 +20,7 @@ public class Particle {
     public double y;
 
     public void move() {
-        x += speedX / (Model.timeFrame);
+        x += speedX / (Model.timeFrame); // This should be using a measured time delta rather than using a fixed value.
         y += speedY / (Model.timeFrame);
         //uncomment the following to have particle bouncing on the boundary
         //if(this.x<0){this.speedX*=-1;}
@@ -79,7 +79,7 @@ public class Particle {
             newSpeedX /= (1 + (this.speedX * dirX) / Model.lightSpeed);
             double newSpeedY = this.speedY + dirY;
             newSpeedY /= (1 + (this.speedY * dirY) / Model.lightSpeed);
-            if (!Double.isNaN(dirX)) {
+            if (!Double.isNaN(dirX)) { // No need to calculate the new speed values in the first place if the dir variables are NaN
                 this.speedX = newSpeedX;
             }
             if (!Double.isNaN(dirY)) {
