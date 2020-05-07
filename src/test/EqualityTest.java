@@ -1,7 +1,6 @@
 package test;
 
 import datasets.DataSetLoader;
-import model.DrawableParticle;
 import model.Model;
 import model.ModelParallel;
 import model.Particle;

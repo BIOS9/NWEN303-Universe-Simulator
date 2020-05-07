@@ -16,7 +16,7 @@ public class ModelParallel extends Model {
                 .parallel()
                 .forEach(Particle::move);
 
-        mergeParticles(); // This should remain after move and interact.
+        mergeParticles();
         updateGraphicalRepresentation();
     }
 
