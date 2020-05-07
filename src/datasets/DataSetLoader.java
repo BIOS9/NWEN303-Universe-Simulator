@@ -6,8 +6,9 @@ import model.Particle;
 import java.util.Random;
 
 public class DataSetLoader {
-    public static Model getRegularGrid(int min, int max, int distance) {
-        Model result = new Model();
+    public static <T extends Model> T getRegularGrid(Class<T> modelClass, int min, int max, int distance) {
+        T result;
+        try { result = modelClass.newInstance(); } catch (Exception ex) { throw new RuntimeException(ex); } // not great but works for now
         for (int i = min; i < max; i += distance) {
             for (int j = min; j < max; j += distance) {
                 result.p.add(new Particle(0.5, 0, 0, i, j));
@@ -16,8 +17,9 @@ public class DataSetLoader {
         return result;
     }
 
-    public static Model getRandomGrid(int min, int max, int distance) {
-        Model result = new Model();
+    public static <T extends Model> T getRandomGrid(Class<T> modelClass, int min, int max, int distance) {
+        T result;
+        try { result = modelClass.newInstance(); } catch (Exception ex) { throw new RuntimeException(ex); } // not great but works for now
         Random r = new Random(1);
         for (int i = min; i < max; i += distance) {
             for (int j = min; j < max; j += distance) {
@@ -27,8 +29,9 @@ public class DataSetLoader {
         return result;
     }
 
-    public static Model getRandomSet(int min, int max, int size) {
-        Model result = new Model();
+    public static <T extends Model> T getRandomSet(Class<T> modelClass, int min, int max, int size) {
+        T result;
+        try { result = modelClass.newInstance(); } catch (Exception ex) { throw new RuntimeException(ex); } // not great but works for now
         Random r = new Random(1);
         for (int i = 0; i < size; i++) {
             result.p.add(new Particle(0.5, 0, 0, min + r.nextInt(max - min) + 0.5 - r.nextDouble(), min + r.nextInt(max - min) + 0.5 - r.nextDouble()));
@@ -36,8 +39,9 @@ public class DataSetLoader {
         return result;
     }
 
-    public static Model getRandomRotatingGrid(double speed, int min, int max, int distance) {
-        Model result = new Model();
+    public static <T extends Model> T getRandomRotatingGrid(Class<T> modelClass, double speed, int min, int max, int distance) {
+        T result;
+        try { result = modelClass.newInstance(); } catch (Exception ex) { throw new RuntimeException(ex); } // not great but works for now
         Random r = new Random(1);
         for (int i = min; i < max; i += distance) {
             for (int j = min; j < max; j += distance) {
@@ -47,8 +51,8 @@ public class DataSetLoader {
         return result;
     }
 
-    public static Model getElaborate(int min, int max, int distance, double deathRate) {
-        Model result = getRandomRotatingGrid(0.05d, min, max, distance);
+    public static <T extends Model> T getElaborate(Class<T> modelClass, int min, int max, int distance, double deathRate) {
+        T result = getRandomRotatingGrid(modelClass, 0.05d, min, max, distance);
         Random r = new Random(1);
         for (int i = 0; i < result.p.size(); i += 1) {
             if (r.nextDouble() > deathRate) {

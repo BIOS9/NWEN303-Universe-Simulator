@@ -1,7 +1,9 @@
 package gui;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import datasets.DataSetLoader;
 import model.Model;
+import model.ModelParallel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +79,7 @@ public class Gui extends JFrame implements Runnable {
         //Model m=DataSetLoader.getRegularGrid(100, 800, 40);//Try those configurations
         //Model m=DataSetLoader.getRandomRotatingGrid(0.02d,100, 800, 40);
         //Model m=DataSetLoader.getRandomRotatingGrid(0.02d,100, 800, 30);
-        Model m = DataSetLoader.getElaborate(200, 700, 2, 0.99);
+        Model m = DataSetLoader.getElaborate(ModelParallel.class, 200, 700, 2, 0.99);
         //Model m=DataSetLoader.getElaborate(200, 700, 2,0.99005);
         //Model m=DataSetLoader.getElaborate(200, 700, 2,0.99008);
         //Model m=DataSetLoader.getRandomSet(100, 800, 1000);

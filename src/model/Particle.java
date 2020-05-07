@@ -1,9 +1,11 @@
 package model;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-public class Particle {
+public class Particle implements Cloneable {
     public Particle(double mass, double speedX, double speedY, double x, double y) {
         this.mass = mass;
         this.speedX = speedX;
@@ -86,5 +88,31 @@ public class Particle {
                 this.speedY = newSpeedY;
             }
         }
+    }
+
+    private static final double THRESHOLD = 0.000001f; // allowed difference between values
+    public boolean similar(Particle p) {
+        return Math.abs(p.mass - mass) < THRESHOLD &&
+                Math.abs(p.speedX - speedX) < THRESHOLD &&
+                Math.abs(p.speedY - speedY) < THRESHOLD &&
+                Math.abs(p.x - x) < THRESHOLD &&
+                Math.abs(p.y - y) < THRESHOLD;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Particle particle = (Particle) o;
+        return Double.compare(particle.mass, mass) == 0 &&
+                Double.compare(particle.speedX, speedX) == 0 &&
+                Double.compare(particle.speedY, speedY) == 0 &&
+                Double.compare(particle.x, x) == 0 &&
+                Double.compare(particle.y, y) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mass, speedX, speedY, x, y);
     }
 }
