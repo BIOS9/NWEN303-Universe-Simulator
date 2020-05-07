@@ -34,13 +34,14 @@ public class PerformanceTest {
         return time1 - time0;
     }
 
-   void runSteps(Model m, String name) {
+   double runSteps(Model m, String name) {
         long time = timeOf(() -> {
             for (int i = 0; i < 10000; ++i) {
                 m.step();
             }
         }, 100, 10);//realistically 20.000 to make the JIT do his job..
         System.out.println(name + " 10000 steps takes " + time / 1000d + " seconds");
+        return time / 1000d;
     }
 
     @Test
@@ -48,7 +49,9 @@ public class PerformanceTest {
         Model model = DataSetLoader.getElaborate(Model.class, 200, 300, 2, 0.99);
         Model modelParallel = DataSetLoader.getElaborate(ModelParallel.class, 200, 300, 2, 0.99);
 
-        runSteps(model, "Sequential");
-        runSteps(modelParallel, "Parallel");
+        double sequentialResult = runSteps(model, "Sequential");
+        double parallelResult = runSteps(modelParallel, "Parallel");
+
+        assertTrue(parallelResult < sequentialResult);
     }
 }
